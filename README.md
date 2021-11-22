@@ -5,5 +5,5 @@
 pip install -r requirements.txt  
 
 ## Usage  
-[Usage]python ICPscan.py (domian/ICP)  
+python ICPscan.py (domian/ICP)  
 example:python ICPscan.py www.example.com  
