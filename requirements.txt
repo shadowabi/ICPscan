@@ -1,4 +1,4 @@
-fake_useragent==0.1.11
-requests==2.25.1
-lxml==4.5.1
-beautifulsoup4==4.10.0
+fake_useragent
+requests
+lxml
+beautifulsoup4
