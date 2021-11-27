@@ -1,4 +1,5 @@
-fake_useragent
+tqdm
+urllib3
 requests
 lxml
 beautifulsoup4
