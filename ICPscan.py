@@ -13,6 +13,7 @@ from lxml import etree
 import os
 # from fake_useragent import UserAgent
 # from requests.adapters import HTTPAdapter
+import platform
 from tqdm import tqdm
 import urllib3
 
@@ -140,7 +141,8 @@ if __name__=="__main__":
 			t.start()
 			t.join(1)
 		pbar.close()
-		os.system("cls")
+		cmd = "cls" if platform.system() == "Windows" else "clear"
+		os.system(cmd)
 		print("扫描结束！输出结果")
 		with open("result.txt","w+",encoding='utf8') as f:
 			f.write(number + "\n")
