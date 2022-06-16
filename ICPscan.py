@@ -71,6 +71,7 @@ def Check(url):
 		return url
 
 def Scan(url):
+	global flag
 	try:
 		url = Check(url)
 		if flag == 0:
@@ -79,8 +80,8 @@ def Scan(url):
 		r = get(url = url, headers = header, timeout = 2, verify = False)
 		if(flag == 1):
 			GetICP(r.text) #通过域名提取ICP号
-			if ICPnumber == "":
-				raise Exception("该域名无法提取备案号")
+			# if ICPnumber == "":
+			# 	raise Exception("该域名无法提取备案号")
 		url = icp + ICPnumber
 		r = get(url = url, headers = header, timeout = 2, verify = False)
 		GetDomain(r.text)
@@ -100,8 +101,8 @@ if __name__=="__main__":
 	else:
 		Scan(target)
 	with open("result.txt","w+",encoding='utf8') as f:
-		f.write(ICPnumber + "\n")
-		print(ICPnumber)
+		print("备案号：" + ICPnumber)
+		print("子域名：")
 		for i in rs:
 			print(i)
 			f.write(i + "\n")
