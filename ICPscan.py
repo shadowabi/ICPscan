@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 #author:Sh4d0w_小白
 
-import grequests
 import argparse
 from requests import get
 from re import *
@@ -11,16 +10,16 @@ from lxml import etree
 from os import system, _exit
 import platform
 import urllib3
-from tqdm import tqdm
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 ap = argparse.ArgumentParser()
-ap.add_argument("-u", "--url", help = "Input IP/DOMAIN/URL/ICP", metavar = "www.baidu.com", required = True)
+group = ap.add_mutually_exclusive_group()
+group.add_argument("-u", "--url", help = "Input IP/DOMAIN/URL", metavar = "www.baidu.com")
+group.add_argument("-f", "--file", help = "Input FILENAME", metavar = "1.txt")
 icp = "https://icplishi.com/"
 flag = 0
 ICPnumber = ""
-rs = []
-good = []
+rs = [] #存放域名结果
 
 header = {
 	"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4621.0 Safari/537.36"
@@ -39,13 +38,8 @@ def GetDomain(html):
 	text = text.xpath('string(.)')
 	text = compile(r'.*\w+\.\w+').findall(text)
 	for i in text:
-		try:
-			rs.append(grequests.get("http://" + i, headers = header, timeout = 3, verify = False)) #扫描
-		except:
-			pass
-	for i in grequests.map(rs):
-		if i.status_code == 200:
-			good.append(i.url)
+		if i and i not in rs:
+			rs.append(i)
 
 
 def GetICP(html):
@@ -92,21 +86,26 @@ def Scan(url):
 		GetDomain(r.text)
 	except Exception as err:
 		print(err)
+	finally:
+		flag = 0
 
 
 if __name__=="__main__":
 	args = ap.parse_args()
-	url = args.url
+	target = args.url or args.file
 	print("开始进行扫描：")
-	Scan(url)
-	clear()
-	print("扫描结束！")
+	if args.file:
+		for i in open(target):
+			Scan(i.strip())
+	else:
+		Scan(target)
 	with open("result.txt","w+",encoding='utf8') as f:
 		f.write(ICPnumber + "\n")
 		print(ICPnumber)
-		for i in good:
+		for i in rs:
 			print(i)
 			f.write(i + "\n")
+	print("扫描结束！")
 	print("已保存到result.txt文件中，按回车键退出程序！")
 	input()
 	_exit(0)
