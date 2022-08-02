@@ -10,6 +10,7 @@ from lxml import etree
 from os import system, _exit
 import platform
 import urllib3
+import readline
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 ap = argparse.ArgumentParser()
