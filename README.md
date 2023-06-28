@@ -2,7 +2,13 @@
 通过域名或备案号，查询备案信息中的所有域名  
 
 ## Install  
-pip install -r requirements.txt  
+去release中下载
 
 ## Usage  
-python ICPscan.py [-h] [-u www.baidu.com | -f 1.txt]
+./ICPscan_amd64 -h  
+Usage:  
+
+Flags:  
+  -f, --file string   从文件中读取目标地址 (Input FILENAME)  
+  -h, --help          help for ICPscan  
+  -u, --url string    输入目标地址 (Input IP/DOMAIN/URL)  
