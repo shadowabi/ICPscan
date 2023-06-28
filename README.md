@@ -5,7 +5,7 @@
 去release中下载
 
 ## Notice
-云厂商VPS使用本工具可能会导致失效，需要手工检查访问https://icplishi.com/是否会跳转https://sewer.ip138.com/
+云厂商VPS使用本工具可能会导致失效  
 
 ## Usage  
 ./ICPscan_amd64 -h  
