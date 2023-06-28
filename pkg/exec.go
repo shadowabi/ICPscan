@@ -141,12 +141,17 @@ func Scan(url string, wg *sync.WaitGroup) {
 
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("X-Forwarded-For", "127.0.0.1")
 	resp, err := client.Do(req)
 	if err != nil {
 		err.Error()
 		return
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode == 302 {
+		fmt.Println("该IP已被屏蔽，请尽量不要使用云厂商VPS使用本工具")
+		return
+	}
 
 	if flag == 1 {
 		GetICP(GetResponseBody(resp)) //通过域名提取ICP号
